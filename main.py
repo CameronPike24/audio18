@@ -33,7 +33,7 @@ class RecordForm(BoxLayout): #
     def start_record(self):
         #self.b_record.disabled = True
         #self.p_bar.max = recordtime
-        REC.prepare()
+        #REC.prepare()
         REC.start()
         Clock.schedule_once(self.stop_record, recordtime)
         Clock.schedule_interval(self.update_display, 1/30.)
@@ -61,7 +61,7 @@ class Recorder(object):
         self.ChannelConfig = self.AudioFormat.CHANNEL_IN_MONO
         self.AudioEncoding = self.AudioFormat.ENCODING_PCM_16BIT
         self.BufferSize = self.AudioRecord.getMinBufferSize(self.SampleRate, self.ChannelConfig, self.AudioEncoding)
-        self.outstream = self.FileOutputStream(PATH)
+        #self.outstream = self.FileOutputStream(PATH)
         self.sData = []
         self.mic = get_input(callback=self.mic_callback, source='mic', buffersize=self.BufferSize)
  
