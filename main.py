@@ -46,7 +46,8 @@ class RecordForm(BoxLayout): #
  
     def update_display(self,dt):
         #self.p_bar.value = self.p_bar.value + dt
- 
+        print("here")
+       
  
 class Recorder(object):
     def __init__(self):
