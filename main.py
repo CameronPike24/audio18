@@ -47,6 +47,8 @@ class Recorder(object):
         #self.outstream = self.FileOutputStream(PATH)
         self.sData = []
         self.mic = get_input(callback=self.mic_callback, source='mic', buffersize=self.BufferSize)
+        print("This is the audio source")
+        print(self.AudioSource)
  
     def mic_callback(self, buf):
         self.sData.append(buf)
