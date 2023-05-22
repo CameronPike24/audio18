@@ -1,5 +1,6 @@
 
 from kivy.app import App
+from kivy.lang import Builder
 from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import NumericProperty, ObjectProperty
 from kivy.clock import Clock
@@ -99,7 +100,8 @@ class RecordApp(App):
     def build(self):
         request_permissions([Permission.INTERNET, Permission.RECORD_AUDIO,Permission.READ_EXTERNAL_STORAGE,Permission.WRITE_EXTERNAL_STORAGE])
         self.title = 'Recording Application'
-        return RecordForm()
+        #return RecordForm()
+        return Builder.load_file("look.kv")
  
 if __name__ == '__main__':
     RecordApp().run()
