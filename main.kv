@@ -1,12 +1,16 @@
-RecordForm:
+#:import utils kivy.utils
+<RecordForm>:
+    canvas.before:
+        Color:
+            rgb: utils.get_color_from_hex('#212946')
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+
     BoxLayout:
         orientation: "vertical"
-        BoxLayout:
-            size_hint: [1, .8]
-            Graph:
-                id: graph
-                xlabel: ""
-                ylabel: "Level"
+
         BoxLayout:
             size_hint: [1, .2]
             orientation: "horizontal"

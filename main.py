@@ -1,4 +1,6 @@
-
+from kivy.uix.anchorlayout import AnchorLayout
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.popup import Popup
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.boxlayout import BoxLayout
@@ -16,7 +18,7 @@ import numpy as np
  
 #if not os.path.isdir("/sdcard/kivyrecords/"):
 #    os.mkdir("/sdcard/kivyrecords/")
- 
+
 PATH = "rec_test.wav"
  
 recordtime = 5
@@ -26,30 +28,10 @@ samples_per_second = 60
 class RootScreen(BoxLayout): #
     pass
  
- 
-class RecordForm(BoxLayout): #
-    #b_record = ObjectProperty()
-    #p_bar = ObjectProperty()
- 
-    def start_record(self):
-        #self.b_record.disabled = True
-        #self.p_bar.max = recordtime
-        #REC.prepare()
-        REC.start()
-        Clock.schedule_once(self.stop_record, recordtime)
-        Clock.schedule_interval(self.update_display, 1/30.)
- 
-    def stop_record(self, dt):
-        Clock.unschedule(self.update_display)
-        #self.p_bar.value = 0
-        REC.stop()
-        #self.b_record.disabled = False
- 
-    def update_display(self,dt):
-        #self.p_bar.value = self.p_bar.value + dt
-        print("here")
+
+
        
- 
+
 class Recorder(object):
     def __init__(self):
         # get the needed Java classes
@@ -94,14 +76,78 @@ class Recorder(object):
         wf.close()
  
 REC = Recorder()
- 
+
 class RecordApp(App):
+	
+    def __init__(self, **kwargs):
+        super(RecordApp, self).__init__(**kwargs)
+        
+        	
  
     def build(self):
-        request_permissions([Permission.INTERNET, Permission.RECORD_AUDIO,Permission.READ_EXTERNAL_STORAGE,Permission.WRITE_EXTERNAL_STORAGE])
+        #request_permissions([Permission.INTERNET, Permission.RECORD_AUDIO,Permission.READ_EXTERNAL_STORAGE,Permission.WRITE_EXTERNAL_STORAGE])
         self.title = 'Recording Application'
-        #return RecordForm()
-        return Builder.load_file("look.kv")
+        return RecordForm()
+        #return Builder.load_file("look.kv")
+  
+     
+        
+class RecordForm(BoxLayout): #
+    #b_record = ObjectProperty()
+    #p_bar = ObjectProperty()
  
-if __name__ == '__main__':
-    RecordApp().run()
+    def start_record(self):
+        #self.b_record.disabled = True
+        #self.p_bar.max = recordtime
+        #REC.prepare()
+        REC.start()
+        Clock.schedule_once(self.stop_record, recordtime)
+        Clock.schedule_interval(self.update_display, 1/30.)
+ 
+    def stop_record(self, dt):
+        Clock.unschedule(self.update_display)
+        #self.p_bar.value = 0
+        REC.stop()
+        #self.b_record.disabled = False
+ 
+    def update_display(self,dt):
+        #self.p_bar.value = self.p_bar.value + dt
+        print("here")        
+        
+'''
+class JKMain(AnchorLayout):
+    def __init__(self, **kwargs):
+        super(JKMain, self).__init__(**kwargs)
+
+    def change_text(self, layers):
+        self.the_time.text = "Total Layers : " + str(layers)
+        print("Total Layers = " + str(layers))
+
+    def popup_func(self):
+
+        content = ConfirmPopup()
+        content.bind(on_answer=self._on_answer)
+        self.popup = Popup(title="Select .zip file",
+                           content=content,
+                           size_hint=(None, None),
+                           size=(500, 500),
+                           auto_dismiss=False)
+        self.popup.open()
+
+    def _on_answer(self, instance, answer, obj):
+        self.popup.dismiss()
+'''
+
+class Main(App):
+
+    def build(self):
+        #return JKMain()
+        request_permissions([Permission.INTERNET, Permission.RECORD_AUDIO,Permission.READ_EXTERNAL_STORAGE,Permission.WRITE_EXTERNAL_STORAGE])
+        return RecordForm()
+        
+
+
+if __name__ == "__main__":
+    Main().run()
+
+
