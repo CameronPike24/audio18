@@ -51,7 +51,7 @@ class Recorder(object):
     def mic_callback(self, buf):
         self.sData.append(buf)
         print ('got : ' + str(len(buf)))
-        print(sData)
+        print(self.sData)
  
  
     def start(self):
