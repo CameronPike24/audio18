@@ -1,6 +1,6 @@
 from kivy.uix.anchorlayout import AnchorLayout
 from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.popup import Popup
+#from kivy.uix.popup import Popup
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.boxlayout import BoxLayout
@@ -39,19 +39,16 @@ class Recorder(object):
         self.AudioSource = autoclass('android.media.MediaRecorder$AudioSource')
         self.AudioFormat = autoclass('android.media.AudioFormat')
         self.AudioRecord = autoclass('android.media.AudioRecord')
-    # define our system
+
         self.SampleRate = 44100
         self.ChannelConfig = self.AudioFormat.CHANNEL_IN_MONO
         self.AudioEncoding = self.AudioFormat.ENCODING_PCM_16BIT
-        #self.AudioSource = self.AudioSource.MIC
         self.BufferSize = self.AudioRecord.getMinBufferSize(self.SampleRate, self.ChannelConfig, self.AudioEncoding)
         #self.outstream = self.FileOutputStream(PATH)
-        self.sData = []
-        #self.mic = get_input(callback=self.mic_callback, source='MIC', buffersize=self.BufferSize)
+        self.sData = []    
         self.mic = get_input(callback=self.mic_callback, source='mic', buffersize=self.BufferSize)
         
-        print("This is the audio source")
-        print(self.AudioSource)
+
  
     def mic_callback(self, buf):
         self.sData.append(buf)
@@ -77,12 +74,13 @@ class Recorder(object):
         wf.setnchannels(self.mic.channels)
         wf.setsampwidth(2)
         wf.setframerate(self.mic.rate)
-        wf.writeframes(b''.join(self.sData))
-        #print("we wrote the wav file")
+        wf.writeframes(b''.join(self.sData))      
         wf.close()
  
 REC = Recorder()
 
+
+'''
 class RecordApp(App):
 	
     def __init__(self, **kwargs):
@@ -95,7 +93,7 @@ class RecordApp(App):
         self.title = 'Recording Application'
         return RecordForm()
         #return Builder.load_file("look.kv")
-  
+'''  
      
         
 class RecordForm(BoxLayout): #
