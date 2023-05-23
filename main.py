@@ -43,10 +43,13 @@ class Recorder(object):
         self.SampleRate = 44100
         self.ChannelConfig = self.AudioFormat.CHANNEL_IN_MONO
         self.AudioEncoding = self.AudioFormat.ENCODING_PCM_16BIT
+        self.AudioSource = self.AudioSource.MIC
         self.BufferSize = self.AudioRecord.getMinBufferSize(self.SampleRate, self.ChannelConfig, self.AudioEncoding)
         #self.outstream = self.FileOutputStream(PATH)
         self.sData = []
-        self.mic = get_input(callback=self.mic_callback, source='mic', buffersize=self.BufferSize)
+        #self.mic = get_input(callback=self.mic_callback, source='MIC', buffersize=self.BufferSize)
+        self.mic = get_input(callback=self.mic_callback, source=self.AudioSource, buffersize=self.BufferSize)
+        
         print("This is the audio source")
         print(self.AudioSource)
  
@@ -75,6 +78,7 @@ class Recorder(object):
         wf.setsampwidth(2)
         wf.setframerate(self.mic.rate)
         wf.writeframes(b''.join(self.sData))
+        print("we wrote the wav file")
         wf.close()
  
 REC = Recorder()
@@ -104,10 +108,10 @@ class RecordForm(BoxLayout): #
         #REC.prepare()
         REC.start()
         Clock.schedule_once(self.stop_record, recordtime)
-        Clock.schedule_interval(self.update_display, 1/30.)
+        #Clock.schedule_interval(self.update_display, 1/30.)
  
     def stop_record(self, dt):
-        Clock.unschedule(self.update_display)
+        #Clock.unschedule(self.update_display)
         #self.p_bar.value = 0
         REC.stop()
         #self.b_record.disabled = False
