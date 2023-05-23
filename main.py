@@ -78,7 +78,7 @@ class Recorder(object):
         wf.setsampwidth(2)
         wf.setframerate(self.mic.rate)
         wf.writeframes(b''.join(self.sData))
-        print("we wrote the wav file")
+        #print("we wrote the wav file")
         wf.close()
  
 REC = Recorder()
